@@ -1,0 +1,24 @@
+[
+  {
+    "asset_type": "key",
+    "name": "prod-payments-rsa-kms-key",
+    "source": "aws:kms:us-east-1",
+    "algorithm": "rsa-2048",
+    "key_size": 2048,
+    "exposure": "internal",
+    "criticality": "critical",
+    "owner": "payments-platform",
+    "service": "payments-api"
+  },
+  {
+    "asset_type": "certificate",
+    "name": "api.example.com",
+    "source": "aws:acm:us-east-1",
+    "algorithm": "rsa-2048",
+    "key_size": 2048,
+    "exposure": "public",
+    "criticality": "critical",
+    "owner": "edge-platform",
+    "service": "public-api"
+  }
+]

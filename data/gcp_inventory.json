@@ -1,0 +1,24 @@
+[
+  {
+    "asset_type": "key",
+    "name": "analytics-signing-key",
+    "source": "gcp:cloud-kms:global",
+    "algorithm": "rsa-3072",
+    "key_size": 3072,
+    "exposure": "internal",
+    "criticality": "medium",
+    "owner": "analytics",
+    "service": "warehouse-loader"
+  },
+  {
+    "asset_type": "certificate",
+    "name": "frontend-load-balancer-cert",
+    "source": "gcp:certificate-manager:global",
+    "algorithm": "ecdsa",
+    "key_size": 256,
+    "exposure": "public",
+    "criticality": "high",
+    "owner": "web-platform",
+    "service": "frontend"
+  }
+]

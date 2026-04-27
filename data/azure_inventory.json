@@ -1,0 +1,24 @@
+[
+  {
+    "asset_type": "key",
+    "name": "customer-data-ecc-key",
+    "source": "azure:key-vault:prod-vault",
+    "algorithm": "ecc",
+    "key_size": 256,
+    "exposure": "internal",
+    "criticality": "high",
+    "owner": "customer-data",
+    "service": "customer-profile"
+  },
+  {
+    "asset_type": "certificate",
+    "name": "internal-api-cert",
+    "source": "azure:key-vault:prod-vault",
+    "algorithm": "rsa-2048",
+    "key_size": 2048,
+    "exposure": "internal",
+    "criticality": "medium",
+    "owner": "platform-services",
+    "service": "internal-api"
+  }
+]
