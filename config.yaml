@@ -1,0 +1,12 @@
+database_url: "sqlite:///./data/results.db"
+algorithms_enabled:
+  - rsa
+  - kyber
+benchmark_iterations: 3
+benchmark_sizes:
+  - 1024
+  - 1048576
+  - 10485760
+output_path: "./reports"
+kyber_mode: "Kyber512"
+rsa_key_size: 2048
