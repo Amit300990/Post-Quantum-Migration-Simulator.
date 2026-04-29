@@ -16,6 +16,8 @@ def load_yaml_config() -> dict[str, Any]:
     if CONFIG_PATH.exists():
         with open(CONFIG_PATH, "r", encoding="utf-8") as stream:
             return yaml.safe_load(stream) or {}
+    import logging
+    logging.getLogger("pqms").warning("config.yaml not found at %s; using defaults", CONFIG_PATH)
     return {}
 
 

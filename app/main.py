@@ -3,16 +3,22 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
 
 from app.api.routes.crypto import router as crypto_router
 from app.api.routes.benchmark import router as benchmark_router
 from app.api.routes.handshake import router as handshake_router
 from app.api.routes.results import router as results_router
 from app.db.database import init_db
+from app.utils.config import settings
+from app.utils.limiter import limiter
+from app.utils.logger import setup_logger
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    setup_logger(settings.output_path)
     # Import models so that SQLAlchemy's Base.metadata is populated
     # before create_all() runs — otherwise the tables are never created.
     from app.db import models  # noqa: F401
@@ -26,6 +32,9 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan,
 )
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.include_router(crypto_router)
 app.include_router(benchmark_router)

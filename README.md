@@ -91,7 +91,7 @@ API endpoints:
 ### Run the dashboard
 
 ```bash
-streamlit run dashboard/app.py
+streamlit run dashboard/dashboard_app.py
 ```
 
 ### Run CLI commands
@@ -99,7 +99,7 @@ streamlit run dashboard/app.py
 ```bash
 python cli/cli.py encrypt --algo rsa --input sample.txt
 python cli/cli.py encrypt --algo kyber --input sample.txt
-python cli/cli.py decrypt --algo rsa --payload-file sample.rsa.json --private-key <base64>
+python cli/cli.py decrypt --algo rsa --payload-file sample.rsa.json --key-file sample.rsa.key
 python cli/cli.py benchmark --algo rsa
 python cli/cli.py handshake --mode pqc
 ```

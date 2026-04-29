@@ -49,7 +49,7 @@ def get_results(db: Session = Depends(get_db)) -> dict[str, Any]:
 
 
 @router.get("/export")
-def export_results(format: str = Query("json", pattern="^(json|csv)$"), db: Session = Depends(get_db)) -> Any:
+def export_results(fmt: str = Query("json", pattern="^(json|csv)$"), db: Session = Depends(get_db)) -> Any:
     benchmark_rows = db.query(BenchmarkResult).all()
     handshake_rows = db.query(HandshakeResult).all()
     benchmark_df = pd.DataFrame([{
@@ -72,10 +72,10 @@ def export_results(format: str = Query("json", pattern="^(json|csv)$"), db: Sess
         "created_at": row.created_at,
     } for row in handshake_rows])
 
-    if format == "csv":
+    if fmt == "csv":
         content = "Benchmark Results\n" + benchmark_df.to_csv(index=False) + "\nHandshake Results\n" + handshake_df.to_csv(index=False)
         logger.info("Exported results as CSV")
         return PlainTextResponse(content, media_type="text/csv")
 
-    logger.info("Exported results as JSON")
+    logger.info("Exported results as JSON")  # fmt == "json"
     return JSONResponse({"benchmarks": benchmark_df.to_dict(orient="records"), "handshakes": handshake_df.to_dict(orient="records")})

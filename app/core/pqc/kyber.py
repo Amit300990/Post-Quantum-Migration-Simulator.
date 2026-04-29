@@ -27,7 +27,6 @@ def generate_kyber_keypair(mode: str = DEFAULT_KYBER_MODE) -> dict[str, bytes]:
 
 def kyber_encapsulate(public_key: bytes, mode: str = DEFAULT_KYBER_MODE) -> dict[str, bytes]:
     with oqs.KeyEncapsulation(mode) as kem:
-        kem.import_public_key(public_key)
         ciphertext, shared_secret = kem.encap_secret(public_key)
     return {"ciphertext": ciphertext, "shared_secret": shared_secret}
 

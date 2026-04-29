@@ -25,8 +25,9 @@ def encrypt_aes_gcm(plaintext: bytes, key: bytes, associated_data: bytes | None 
     }
 
 
-def decrypt_aes_gcm(payload: dict[str, Any], key: bytes, associated_data: bytes | None = None) -> bytes:
+def decrypt_aes_gcm(payload: dict[str, Any], key: bytes) -> bytes:
     aesgcm = AESGCM(key)
     nonce = payload["nonce"]
     ciphertext = payload["ciphertext"]
+    associated_data = payload.get("associated_data")
     return aesgcm.decrypt(nonce, ciphertext, associated_data)

@@ -14,6 +14,7 @@ class EncryptResponse(BaseModel):
     encrypted_key: str | None = None
     encapsulated_key: str | None = None
     private_key: str
+    public_key: str
 
 
 class DecryptResponse(BaseModel):

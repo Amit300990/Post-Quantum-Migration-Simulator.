@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import time
 from typing import Any
 from datetime import datetime, timezone
@@ -9,7 +10,7 @@ from app.core.pqc.kyber import generate_kyber_keypair, kyber_decapsulate, kyber_
 
 
 def simulate_classical_handshake(server_public_key: bytes, server_private_key: bytes) -> dict[str, Any]:
-    pre_master_secret = b"PREMASTER_SECRET_" + datetime.now(timezone.utc).isoformat().encode("utf-8")
+    pre_master_secret = os.urandom(48)
     public_key = load_public_key(server_public_key)
     private_key = load_private_key(server_private_key)
     start = time.perf_counter()

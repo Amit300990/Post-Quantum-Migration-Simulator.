@@ -1,25 +1,32 @@
 from __future__ import annotations
 
 from typing import Any
-from fastapi import APIRouter, Depends, HTTPException
+
+from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 
 from app.core.benchmark import run_benchmark
 from app.db.database import get_db
 from app.db.models import BenchmarkResult
 from app.utils.config import settings
+from app.utils.limiter import limiter
 from app.utils.logger import logger
 
 router = APIRouter(tags=["benchmark"])
 
 
 @router.post("/benchmark")
-def benchmark(algorithm: str, db: Session = Depends(get_db)) -> dict[str, Any]:
+@limiter.limit("5/minute")
+def benchmark(request: Request, algorithm: str, db: Session = Depends(get_db)) -> dict[str, Any]:
     algorithm = algorithm.lower()
     if algorithm not in settings.algorithms_enabled:
         raise HTTPException(status_code=400, detail="Algorithm not enabled")
 
-    results = run_benchmark(algorithm)
+    try:
+        results = run_benchmark(algorithm)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
     for result in results:
         record = BenchmarkResult(
             algorithm=result["algorithm"],

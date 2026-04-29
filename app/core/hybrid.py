@@ -43,9 +43,10 @@ class RSAHybridCipher(CryptoEngine):
         }
 
     def decrypt(self, payload: dict[str, Any]) -> bytes:
-        assert self.private_key is not None, "Private key required for decryption"
+        if self.private_key is None:
+            raise ValueError("Private key required for decryption")
         session_key = rsa_decrypt(self.private_key, payload["encrypted_key"])
-        return decrypt_aes_gcm(payload, session_key, payload.get("associated_data"))
+        return decrypt_aes_gcm(payload, session_key)
 
 
 class KyberHybridCipher(CryptoEngine):
@@ -73,7 +74,8 @@ class KyberHybridCipher(CryptoEngine):
         }
 
     def decrypt(self, payload: dict[str, Any]) -> bytes:
-        assert self.private_key is not None, "Private key required for decryption"
+        if self.private_key is None:
+            raise ValueError("Private key required for decryption")
         shared_secret = kyber_decapsulate(payload["encapsulated_key"], self.private_key, self.kyber_mode)
         session_key = derive_aes_key(shared_secret)
-        return decrypt_aes_gcm(payload, session_key, payload.get("associated_data"))
+        return decrypt_aes_gcm(payload, session_key)
