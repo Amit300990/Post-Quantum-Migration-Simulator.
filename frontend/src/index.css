@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  :root {
+    --scrollbar-track: #0d1117;
+    --scrollbar-thumb: #30363d;
+    --scrollbar-thumb-hover: #484f58;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #0d1117;
+    color: #c9d1d9;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
+
+  ::selection {
+    background: rgba(6, 182, 212, 0.3);
+    color: #e2e8f0;
+  }
+}
+
+@layer components {
+  .card-glow {
+    box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.1), 0 4px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .card-glow:hover {
+    box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.3), 0 4px 32px rgba(6, 182, 212, 0.08);
+  }
+
+  .text-glow-cyan {
+    text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+  }
+
+  .bg-grid {
+    background-image: linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .input-base {
+    @apply w-full bg-surface-800 border border-surface-600 rounded-lg px-3 py-2 text-sm text-slate-100
+      placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50
+      transition-colors duration-150;
+  }
+
+  .select-base {
+    @apply input-base appearance-none cursor-pointer;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-500
+      text-white font-medium text-sm rounded-lg transition-all duration-150
+      focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-surface-900
+      disabled:opacity-50 disabled:cursor-not-allowed active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-surface-700 hover:bg-surface-600
+      text-slate-200 font-medium text-sm rounded-lg border border-surface-600 hover:border-surface-500
+      transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-slate-500
+      disabled:opacity-50 disabled:cursor-not-allowed active:scale-95;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-red-600/20 hover:bg-red-600/30
+      text-red-400 font-medium text-sm rounded-lg border border-red-500/30
+      transition-all duration-150 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .tab-active {
+    @apply border-b-2 border-cyan-500 text-cyan-400 font-medium;
+  }
+
+  .tab-inactive {
+    @apply border-b-2 border-transparent text-slate-400 hover:text-slate-200 font-medium;
+  }
+
+  .recharts-tooltip-wrapper {
+    outline: none !important;
+  }
+}
+
+@layer utilities {
+  .animation-delay-150 {
+    animation-delay: 150ms;
+  }
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+}
